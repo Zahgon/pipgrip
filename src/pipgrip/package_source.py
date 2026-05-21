@@ -140,9 +140,6 @@ class PackageSource(BasePackageSource):
 
         super(PackageSource, self).__init__()
 
-    @property
-    def root_version(self):
-        return self._root_version
 
     def add(
         self, name, extras, version, deps=None

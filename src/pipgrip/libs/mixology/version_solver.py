@@ -76,9 +76,6 @@ class VersionSolver:
         self._solution = PartialSolution()
         self._threadpool = ThreadPool(threads)
 
-    @property
-    def solution(self):  # type: () -> PartialSolution
-        return self._solution
 
     def is_solved(self):  # type: () -> bool
         return not self._solution.unsatisfied
@@ -358,16 +355,6 @@ class VersionSolver:
         # Prefer packages with as few remaining versions as possible,
         # so that if a conflict is necessary it's forced quickly.
         # at a tie, the package with least dependencies is chosen
-        def _get_min(term):
-            versions = self._source.versions_for(
-                term.package, term.constraint.constraint
-            )
-            deps = (
-                self._source.dependencies_for(term.package, versions[0])
-                if versions
-                else []
-            )
-            return len(versions), len(deps)
 
         if len(unsatisfied) == 1:
             term = unsatisfied[0]

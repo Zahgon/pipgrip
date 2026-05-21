@@ -52,26 +52,9 @@ class Term(object):
         self._normalized_constraint = None
         self._empty = None
 
-    @property
-    def inverse(self):  # type: () -> Term
-        return Term(self.constraint, not self.is_positive())
 
-    @property
-    def package(self):  # type: () -> Hashable
-        return self._package
 
-    @property
-    def constraint(self):  # type: () -> Constraint
-        return self._constraint
 
-    @property
-    def normalized_constraint(self):  # type: () -> Constraint
-        if self._normalized_constraint is None:
-            self._normalized_constraint = (
-                self.constraint if self.is_positive() else self.constraint.inverse
-            )
-
-        return self._normalized_constraint
 
     def is_positive(self):  # type: () -> bool
         return self._positive

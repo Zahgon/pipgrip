@@ -40,10 +40,4 @@ class SolverResult:
         self._decisions = decisions
         self._attempted_solutions = attempted_solutions
 
-    @property
-    def decisions(self):  # type: () -> Dict[Hashable, Any]
-        return self._decisions
 
-    @property
-    def attempted_solutions(self):  # type: () -> int
-        return self._attempted_solutions

@@ -40,9 +40,6 @@ class SolverFailure(Exception):
     def __init__(self, incompatibility):  # type: (Incompatibility) -> None
         self._incompatibility = incompatibility
 
-    @property
-    def message(self):
-        return str(self)
 
     def __str__(self):
         return _Writer(self._incompatibility).write()
@@ -288,12 +285,3 @@ class _Writer:
             cause.other.cause, ConflictCause
         )
 
-    def _count_derivations(self, incompatibility):  # type: (Incompatibility) -> None
-        if incompatibility in self._derivations:
-            self._derivations[incompatibility] += 1
-        else:
-            self._derivations[incompatibility] = 1
-            cause = incompatibility.cause
-            if isinstance(cause, ConflictCause):
-                self._count_derivations(cause.conflict)
-                self._count_derivations(cause.other)

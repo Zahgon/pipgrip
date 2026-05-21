@@ -49,9 +49,6 @@ class VersionUnion(VersionConstraint):
     def __init__(self, *ranges):
         self._ranges = list(ranges)
 
-    @property
-    def ranges(self):
-        return self._ranges
 
     @classmethod
     def of(cls, *ranges):

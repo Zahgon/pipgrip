@@ -59,37 +59,10 @@ class Range(object):
         self._hash = None
         self._string = string
 
-    @property
-    def min(self):
-        return self._min
 
-    @property
-    def max(self):
-        return self._max
 
-    @property
-    def include_min(self):
-        return self._include_min
 
-    @property
-    def include_max(self):
-        return self._include_max
 
-    @property
-    def inverse(self):  # type: () -> _Union[Range, Union]
-        if self.is_any():
-            return EmptyRange()
-
-        low = Range(max=self.min, include_max=not self.include_min)
-        high = Range(min=self.max, include_min=not self.include_max)
-
-        if self.min is None:
-            return high
-
-        if self.max is None:
-            return low
-
-        return low.union(high)
 
     def is_empty(self):
         return False
@@ -378,39 +351,7 @@ class Range(object):
     def __ge__(self, other):
         return self._cmp(other) >= 0
 
-    def _cmp(self, other):  # type: (Range) -> int
-        if self.min is None:
-            if other.min is None:
-                return self._compare_max(other)
 
-            return -1
-        elif other.min is None:
-            return 1
-
-        if self.min != other.min:
-            return -1 if self.min < other.min else 1
-
-        if self.include_min != other.include_min:
-            return -1 if self.include_min else 1
-
-        return self._compare_max(other)
-
-    def _compare_max(self, other):  # type: (Range) -> int
-        if self.max is None:
-            if other.max is None:
-                return 0
-
-            return 1
-        elif other.max is None:
-            return -1
-
-        if self.max != other.max:
-            return 1 if self.max < other.max else -1
-
-        if self.include_max != other.include_max:
-            return 1 if self.include_max else -1
-
-        return 0
 
     def __str__(self):
         if self._string is not None:
@@ -489,9 +430,6 @@ class EmptyRange(Range):
     def is_single_version(self):  # type: () -> bool
         return False
 
-    @property
-    def inverse(self):  # type: () -> _Union[Range, Union]
-        return Range()
 
     def __str__(self):  # type: () -> str
         return "(no versions)"

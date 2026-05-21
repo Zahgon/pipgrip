@@ -117,13 +117,7 @@ class Incompatibility:
         self._terms = terms
         self._cause = cause
 
-    @property
-    def terms(self):  # type: () -> List[Term]
-        return self._terms
 
-    @property
-    def cause(self):  # type: () -> IncompatibilityCause
-        return self._cause
 
     @property
     def external_incompatibilities(self):  # type: () -> Generator[Incompatibility]
@@ -131,15 +125,7 @@ class Incompatibility:
         Returns all external incompatibilities in this incompatibility's
         derivation graph.
         """
-        if isinstance(self._cause, ConflictCause):
-            cause = self._cause  # type: ConflictCause
-            for incompatibility in cause.conflict.external_incompatibilities:
-                yield incompatibility
-
-            for incompatibility in cause.other.external_incompatibilities:
-                yield incompatibility
-        else:
-            yield self
+        pass
 
     def is_failure(self):  # type: () -> bool
         return len(self._terms) == 0 or (

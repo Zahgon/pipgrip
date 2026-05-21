@@ -68,25 +68,10 @@ class VersionRange(VersionConstraint):
         self._include_min = include_min
         self._include_max = include_max
 
-    @property
-    def min(self):
-        return self._min
 
-    @property
-    def max(self):
-        return self._max
 
-    @property
-    def full_max(self):
-        return self._full_max
 
-    @property
-    def include_min(self):
-        return self._include_min
 
-    @property
-    def include_max(self):
-        return self._include_max
 
     def is_empty(self):
         return False
@@ -423,41 +408,7 @@ class VersionRange(VersionConstraint):
     def __ge__(self, other):
         return self._cmp(other) >= 0
 
-    def _cmp(self, other):  # type: (VersionRange) -> int
-        if self.min is None:
-            if other.min is None:
-                return self._compare_max(other)
 
-            return -1
-        elif other.min is None:
-            return 1
-
-        result = self.min._cmp(other.min)
-        if result != 0:
-            return result
-
-        if self.include_min != other.include_min:
-            return -1 if self.include_min else 1
-
-        return self._compare_max(other)
-
-    def _compare_max(self, other):  # type: (VersionRange) -> int
-        if self.max is None:
-            if other.max is None:
-                return 0
-
-            return 1
-        elif other.max is None:
-            return -1
-
-        result = self.max._cmp(other.max)
-        if result != 0:
-            return result
-
-        if self.include_max != other.include_max:
-            return 1 if self.include_max else -1
-
-        return 0
 
     def __str__(self):
         text = ""

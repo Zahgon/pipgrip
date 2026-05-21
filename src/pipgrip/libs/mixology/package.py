@@ -45,13 +45,7 @@ class Package(object):
     def root(cls):  # type: () -> Package
         return Package("_root_")
 
-    @property
-    def name(self):  # type: () -> str
-        return self._name
 
-    @property
-    def req(self):  # type: () -> ParsedRequirement
-        return self._req
 
     def __eq__(self, other):  # type: () -> bool
         return str(other) == str(self)

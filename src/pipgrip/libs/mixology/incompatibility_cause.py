@@ -71,13 +71,7 @@ class ConflictCause(IncompatibilityCause):
         self._conflict = conflict
         self._other = other
 
-    @property
-    def conflict(self):
-        return self._conflict
 
-    @property
-    def other(self):
-        return self._other
 
     def __str__(self):
         return str(self._conflict)

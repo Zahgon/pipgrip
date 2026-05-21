@@ -50,19 +50,8 @@ class Constraint(object):
         self._package = package
         self._constraint = constraint
 
-    @property
-    def package(self):  # type: () -> Hashable
-        return self._package
 
-    @property
-    def constraint(self):  # type: () -> _Union[Range, Union]
-        return self._constraint
 
-    @property
-    def inverse(self):  # type: () -> Constraint
-        new_constraint = self.constraint.inverse
-
-        return self.__class__(self.package, new_constraint)
 
     def allows_all(self, other):  # type: (Constraint) -> bool
         return self.constraint.allows_all(other.constraint)
@@ -95,8 +84,6 @@ class Constraint(object):
     def overlaps(self, other):  # type: (Constraint) -> bool
         return other.allows_any(self)
 
-    def is_disjoint_from(self, other):  # type: (Constraint) -> bool
-        return not self.overlaps(other)
 
     def relation(self, other):  # type: (Constraint) -> SetRelation
         if self.is_subset_of(other):

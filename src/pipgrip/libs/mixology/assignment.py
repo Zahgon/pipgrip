@@ -52,17 +52,8 @@ class Assignment(Term):
         self._index = index
         self._cause = cause
 
-    @property
-    def decision_level(self):  # type: () -> int
-        return self._decision_level
 
-    @property
-    def index(self):  # type: () -> int
-        return self._index
 
-    @property
-    def cause(self):  # type: () -> Incompatibility
-        return self._cause
 
     @classmethod
     def decision(

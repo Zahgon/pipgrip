@@ -79,13 +79,6 @@ class DepTreeDictExporter(DictExporter):
             maxlevel=maxlevel,
         )
 
-    @classmethod
-    def customsort(cls, tup):
-        order = ["name", "extras_name", "version", "pip_string"]
-        k, v = tup
-        if k in order:
-            return (str(order.index(k)), 0)
-        return tup
 
     def export(self, node):
         """Export tree starting at `node`."""
@@ -120,13 +113,6 @@ class ReversedDepTreeDictExporter(DictExporter):
             maxlevel=maxlevel,
         )
 
-    @classmethod
-    def customsort(cls, tup):
-        order = ["name", "extras_name", "version", "pip_string", "requires"]
-        k, v = tup
-        if k in order:
-            return (str(order.index(k)), 0)
-        return tup
 
     def export(self, node):
         """Export tree starting at `node`."""
@@ -170,13 +156,6 @@ def flatten(tree_dict):
     return out
 
 
-def _find_version(source, dep, extras):
-    if dep.package not in source._packages:
-        source._versions_for(dep.package, source.convert_dependency(dep).constraint)
-    versions = [
-        k for k, v in source._packages[dep.package][extras].items() if v is not None
-    ]
-    return versions[-1]
 
 
 def _recurse_dependencies(

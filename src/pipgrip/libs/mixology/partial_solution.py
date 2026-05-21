@@ -79,32 +79,9 @@ class PartialSolution:
         # Whether the solver is currently backtracking.
         self._backtracking = False
 
-    @property
-    def decisions(self):  # type: () -> Dict[Hashable, Any]
-        return self._decisions
 
-    @property
-    def decision_level(self):  # type: () -> int
-        return len(self._decisions)
 
-    @property
-    def attempted_solutions(self):  # type: () -> int
-        return self._attempted_solutions
 
-    @property
-    def unsatisfied(self):  # type: () -> List[Term]
-        decision_packages = {key: key for key in self._decisions.keys()}
-        unsatisfied = [
-            term
-            for term in self._positive.values()
-            if term.package not in self._decisions
-            # if package is in _decisions, but with less extras, this term is also unsatisfied
-            # therefore we need to inspect the key in self._decisions
-            or not term.package.req.extras.issubset(
-                decision_packages[term.package].req.extras
-            )
-        ]
-        return unsatisfied
 
     def decide(self, package, version):  # type: (Hashable, Any) -> None
         """Add an assignment of package as decision and increment the decision level."""
